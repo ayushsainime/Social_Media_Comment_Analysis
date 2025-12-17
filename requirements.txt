@@ -1,0 +1,21 @@
+# Core Project Dependencies
+lightgbm==4.5.0
+xgboost
+wordcloud==1.9.3
+# to lock down your environment and ensure reproducibility across different machines.
+numpy==2.1.2
+pandas==2.2.3
+matplotlib==3.9.2
+seaborn==0.13.2
+nltk==3.9.1
+scikit-learn  # Scikit-learn doesn't typically need a version lock unless strict
+spacy
+# Utility/Other Libraries (if needed)
+joblib==1.4.2
+contractions
+scikit-plot
+fastapi
+uvicorn
+pydantic 
+streamlit 
+requests
