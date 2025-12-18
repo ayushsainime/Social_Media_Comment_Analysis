@@ -69,7 +69,7 @@ docker pull ayushsainime/twitter-reddit-nlp:1.0
 STEP 2 
 RUN THE IMAGE : 
 ```
-docker run -p 8000:8000 -p 8501:8501 ayushsaini/twitter-reddit-nlp:latest
+docker run -p 8000:8000 -p 8501:8501 ayushsainime/twitter-reddit-nlp:1.0
 ```
 
 Step 3 Open in Browser
