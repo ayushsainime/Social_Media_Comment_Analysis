@@ -30,6 +30,7 @@ class ModelName(str, Enum):
     logistic_regression = "logistic_regression"
     gradient_boosting = "gradient_boosting"
     ada_boost = "ada_boost"
+    lgbm = "lgbm"
 
 
 class PredictionRequest(BaseModel):
@@ -94,18 +95,23 @@ def _get_prediction_with_confidence(model, X) -> tuple:
     
     # Try to get probability/confidence
     confidence = None
+    import numpy as np
     if hasattr(model, 'predict_proba'):
         try:
             proba = model.predict_proba(X)[0]
-            confidence = float(max(proba))
+            confidence = float(np.max(proba))
         except Exception:
             pass
     elif hasattr(model, 'decision_function'):
         try:
             decision = model.decision_function(X)[0]
-            # Convert decision function to pseudo-confidence
-            import numpy as np
-            confidence = float(1 / (1 + np.exp(-abs(decision))))
+            # Handle multi-class (array) vs binary (scalar) decision function output
+            if hasattr(decision, '__len__') and not isinstance(decision, (str, bytes)):
+                max_decision = float(np.max(decision))
+            else:
+                max_decision = float(abs(decision))
+            # Convert to pseudo-confidence using sigmoid
+            confidence = float(1 / (1 + np.exp(-max_decision)))
         except Exception:
             pass
 

@@ -214,6 +214,44 @@ class SentimentState(rx.State):
             self.history = self.history[: self.max_history]
         self.has_history = len(self.history) > 0
 
+    # Example texts for dropdown
+    example_options: List[str] = [
+        "😐 Neutral Sentiment",
+        "😊 Positive Sentiment",
+        "😞 Negative Sentiment",
+    ]
+
+    _example_texts: Dict[str, str] = {}
+
+    def _init_examples(self):
+        """Build example text lookup."""
+        self._example_texts = {
+            "😐 Neutral Sentiment": (
+                "The weather forecast predicts a mix of sun and clouds for the upcoming week. "
+                "Maintenance crews are scheduled to arrive at the office building early tomorrow morning. "
+                "Please ensure all documents are submitted through the portal before the deadline passes. "
+                "The cafeteria serves a variety of hot and cold meal options every Tuesday afternoon."
+            ),
+            "😊 Positive Sentiment": (
+                "I am absolutely thrilled with the incredible progress our team has achieved this month! "
+                "The user interface is exceptionally intuitive and makes the entire experience quite delightful. "
+                "Every interaction with the customer support staff has been helpful, kind, and efficient. "
+                "We are so grateful for this wonderful opportunity to grow and succeed together."
+            ),
+            "😞 Negative Sentiment": (
+                "I am extremely disappointed that the latest update has caused so many system crashes. "
+                "The current navigation is frustratingly slow and often fails to load the requested page. "
+                "It is unacceptable that my urgent support tickets have remained unanswered for three days. "
+                "This entire process has been a total waste of time and needs immediate improvement."
+            ),
+        }
+
+    def load_example(self, selected: str):
+        """Load an example text into the text area."""
+        self._init_examples()
+        if selected in self._example_texts:
+            self.text = self._example_texts[selected]
+
     def clear_history(self):
         """Clear prediction history."""
         self.history = []
@@ -259,13 +297,14 @@ def _header() -> rx.Component:
     """Hero header with animated logo and title."""
     return rx.box(
         rx.hstack(
-            # Animated logo video
+            # Project logo image
             rx.box(
-                rx.html(
-                    "<video autoplay loop muted playsinline "
-                    "style='width:100px; height:100px; border-radius:16px; object-fit:cover;'>"
-                    "<source src='https://huggingface.co/datasets/ayushsainime/social_media_sentiment_analyzer_media/resolve/main/video_1.mp4' type='video/mp4'>"
-                    "</video>"
+                rx.image(
+                    src="https://huggingface.co/datasets/ayushsainime/social_media_sentiment_analyzer_media/resolve/main/social%20media%20sentiment%20analyzer.png",
+                    width="100px",
+                    height="100px",
+                    border_radius="16px",
+                    object_fit="cover",
                 ),
                 flex_shrink="0",
             ),
@@ -351,6 +390,28 @@ def _input_section() -> rx.Component:
                     "transition": "all 0.3s ease",
                     "resize": "vertical",
                     "minHeight": "180px",
+                },
+            ),
+            width="100%",
+            spacing="2",
+        ),
+        rx.box(height="16px"),
+        # ── Examples dropdown ──
+        rx.vstack(
+            _section_label("TRY AN EXAMPLE", ACCENT_TEAL),
+            rx.select(
+                items=SentimentState.example_options,
+                placeholder="Pick an example to load...",
+                width="100%",
+                size="3",
+                on_change=SentimentState.load_example,
+                style={
+                    "fontFamily": FONT_BODY,
+                    "backgroundColor": "rgba(255,255,255,0.75)",
+                    "border": "1px solid rgba(13,148,136,0.25)",
+                    "color": TEXT_PRIMARY,
+                    "borderRadius": "12px",
+                    "transition": "all 0.3s ease",
                 },
             ),
             width="100%",

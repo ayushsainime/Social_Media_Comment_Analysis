@@ -38,6 +38,7 @@ def load_models():
         "logistic_regression": _apply_model_compatibility_fixes(joblib.load(os.path.join(MODELS_DIR, "logistic_regression_model.pkl"))),
         "gradient_boosting": _apply_model_compatibility_fixes(joblib.load(os.path.join(MODELS_DIR, "gradient_boosting_model.pkl"))),
         "ada_boost": _apply_model_compatibility_fixes(joblib.load(os.path.join(MODELS_DIR, "ada_boost_model.pkl"))),
+        "lgbm": _apply_model_compatibility_fixes(joblib.load(os.path.join(MODELS_DIR, "lgbm_model.pkl"))),
     }
     
     return tfidf, models
