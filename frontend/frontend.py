@@ -494,6 +494,27 @@ def _action_buttons() -> rx.Component:
     )
 
 
+def _loading_indicator() -> rx.Component:
+    """Show processing feedback below action buttons."""
+    return rx.cond(
+        SentimentState.is_loading,
+        rx.hstack(
+            rx.spinner(size="2", color=ACCENT_BLUE),
+            rx.text(
+                "Processing your request...",
+                font_family=FONT_BODY,
+                font_size="13px",
+                color=TEXT_SECONDARY,
+            ),
+            spacing="2",
+            align="center",
+            justify="center",
+            width="100%",
+            padding_top="2px",
+        ),
+    )
+
+
 def _error_banner() -> rx.Component:
     """Conditional error alert."""
     return rx.cond(
@@ -938,6 +959,7 @@ def index() -> rx.Component:
             # ━━━ RIGHT COLUMN ━━━
             rx.vstack(
                 _action_buttons(),
+                _loading_indicator(),
                 rx.box(height="8px"),
                 _error_banner(),
                 rx.box(height="8px"),

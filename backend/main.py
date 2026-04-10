@@ -102,7 +102,7 @@ def _get_prediction_with_confidence(model, X) -> tuple:
             confidence = float(np.max(proba))
         except Exception:
             pass
-    elif hasattr(model, 'decision_function'):
+    if confidence is None and hasattr(model, 'decision_function'):
         try:
             decision = model.decision_function(X)[0]
             # Handle multi-class (array) vs binary (scalar) decision function output
@@ -116,6 +116,20 @@ def _get_prediction_with_confidence(model, X) -> tuple:
             pass
 
     return sentiment_label, confidence
+
+
+def _to_confidence_percent(confidence: Optional[float]) -> Optional[float]:
+    """Convert 0..1 confidence to percentage, preserving valid 0 values."""
+    if confidence is None:
+        return None
+    try:
+        value = float(confidence)
+    except Exception:
+        return None
+
+    # Keep UI stable even if a model returns a noisy out-of-range score.
+    value = max(0.0, min(1.0, value))
+    return round(value * 100, 2)
 
 
 @app.post("/predict", response_model=PredictionResponse)
@@ -143,7 +157,7 @@ def predict(request: PredictionRequest):
         return PredictionResponse(
             model_used=request.model_name.value,
             prediction=sentiment_label,
-            confidence=round(confidence * 100, 2) if confidence else None
+            confidence=_to_confidence_percent(confidence)
         )
     
     except Exception as e:
@@ -175,7 +189,7 @@ def predict_all(request: PredictionRequest):
             results.append(ModelResult(
                 model_name=model_name,
                 prediction=sentiment_label,
-                confidence=round(confidence * 100, 2) if confidence else None
+                confidence=_to_confidence_percent(confidence)
             ))
         
         return PredictAllResponse(
