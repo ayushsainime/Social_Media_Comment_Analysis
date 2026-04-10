@@ -22,5 +22,9 @@ COPY . .
 
 EXPOSE 3000
 
-# Run directly: avoids CRLF issues with start.sh on Windows
-CMD ["sh", "-c", "uvicorn backend.main:app --host 0.0.0.0 --port 8000 & reflex run --frontend-port 3000 --backend-port 8001"]
+# Extra safety for Vite host allowlist in HF domains.
+ENV __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS=.hf.space
+
+# Run backend API and Reflex frontend in production mode for Spaces.
+# PROD mode avoids Vite dev-server host allowlist blocks on hf.space domains.
+CMD ["sh", "-c", "uvicorn backend.main:app --host 0.0.0.0 --port 8000 & reflex run --env prod --frontend-only --frontend-port 3000"]
