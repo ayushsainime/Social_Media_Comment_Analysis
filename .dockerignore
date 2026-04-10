@@ -1,0 +1,51 @@
+# Git
+.git
+.gitignore
+.gitattributes
+.gitkeep
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Documentation
+README.md
+LICENSE
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg
+*.egg-info/
+*.manifest
+.venv
+.env
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Notebooks
+.ipynb_checkpoints
+*.ipynb
+
+# Data files
+*.csv
+*.db
+
+# Build artifacts
+dist/
+build/
+
+# Project folders not needed in container
+old project/
+media
+assets/external/
+.web
+.states

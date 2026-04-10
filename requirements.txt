@@ -22,6 +22,6 @@ scikit-plot==0.3.7
 # Web Framework
 # NOTE: Install reflex FIRST - it manages pydantic/sqlmodel compatibility
 # pip install reflex
-fastapi
-uvicorn
-requests
+fastapi==0.115.6
+uvicorn==0.34.0
+requests==2.32.3

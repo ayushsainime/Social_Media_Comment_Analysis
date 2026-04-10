@@ -1,10 +1,20 @@
+---
+title: SOCIAL MEDIA SENTIMENT ANALYZER
+emoji: 📊
+colorFrom: blue
+colorTo: purple
+sdk: docker
+app_port: 3000
+pinned: false
+---
+
 #  Social Media Sentiment Analyzer
 
 A powerful machine learning web application for analyzing sentiment in social media text. Built with FastAPI backend and Reflex frontend, featuring multiple ML models, word cloud generation, and model comparison capabilities.
 
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.115.6-green)
-![Reflex](https://img.shields.io/badge/Reflex-0.6.7-purple)
+![Reflex](https://img.shields.io/badge/Reflex-0.8.28-purple)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
 ---
@@ -28,6 +38,7 @@ A powerful machine learning web application for analyzing sentiment in social me
 | **Random Forest** | Ensemble of decision trees |
 | **Logistic Regression** | Probabilistic linear classifier |
 | **Gradient Boosting** | Sequential ensemble learning |
+| **LightGBM** | Gradient boosting with leaf-wise growth |
 | **AdaBoost** | Adaptive boosting classifier |
 
 ---

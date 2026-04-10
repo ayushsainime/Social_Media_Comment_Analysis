@@ -1,8 +1,9 @@
-# Git LFS tracking configuration
-# Track all .pkl (pickle) files with Git LFS
-*.pkl filter=lfs diff=lfs merge=lfs -text
+# XET storage configuration for HuggingFace Spaces
+# Track all .pkl (pickle) files with XET
+*.pkl filter=xet diff=xet merge=xet -text
 # Track large model files
-*.h5 filter=lfs diff=lfs merge=lfs -text
-*.pt filter=lfs diff=lfs merge=lfs -text
-*.pth filter=lfs diff=lfs merge=lfs -text
-*.onnx filter=lfs diff=lfs merge=lfs -text
+*.h5 filter=xet diff=xet merge=xet -text
+*.pt filter=xet diff=xet merge=xet -text
+*.pth filter=xet diff=xet merge=xet -text
+*.onnx filter=xet diff=xet merge=xet -text
+*.pkl filter=lfs diff=lfs merge=lfs -text
