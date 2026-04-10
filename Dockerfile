@@ -25,6 +25,6 @@ EXPOSE 3000
 # Extra safety for Vite host allowlist in HF domains.
 ENV __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS=.hf.space
 
-# Run backend API and Reflex frontend in production mode for Spaces.
-# PROD mode avoids Vite dev-server host allowlist blocks on hf.space domains.
-CMD ["sh", "-c", "uvicorn backend.main:app --host 0.0.0.0 --port 8000 & reflex run --env prod --frontend-only --frontend-port 3000"]
+# Run backend API and Reflex app (frontend + backend) for Spaces.
+# FastAPI on 8000, Reflex backend on 8001, Reflex frontend on 3000.
+CMD ["sh", "-c", "uvicorn backend.main:app --host 0.0.0.0 --port 8000 & reflex run --env prod --frontend-port 3000 --frontend-host 0.0.0.0 --backend-port 8001"]
